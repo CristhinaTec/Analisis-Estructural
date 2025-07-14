@@ -77,16 +77,16 @@ def analizar_estructura_streamlit():
         st.header("📥 Datos de Entrada")
         # --- Valores por defecto para una estructura estable de ejemplo ---
         default_barras = [
-            {"nodos_str": "1 2", "L": 4.0, "theta_grados": 0.0},
-            {"nodos_str": "2 3", "L": 3.0, "theta_grados": 90.0},
-            {"nodos_str": "1 3", "L": 5.0, "theta_grados": 36.87}
+            {"nodos_str": "1 2", "L": 400, "theta_grados": 0.0},
+            {"nodos_str": "2 3", "L": 600, "theta_grados": 0.0},
+            {"nodos_str": "1 3", "L": 500, "theta_grados": 90}
         ]
         default_apoyos = [
             {"nodo": 1, "tipo_str": "Articulado (Pin)"},
             {"nodo": 2, "tipo_str": "Rodillo (Roller, restringe Y)"}
         ]
         default_cargas = [
-            {"nodo": 3, "fx": 1000.0, "fy": -500.0, "mz": 0.0}
+            {"nodo": 3, "fx": 200.0, "fy": -300.0, "mz": 0.0}
         ]
 
         # Usamos un formulario para que la app no se recargue con cada cambio
@@ -103,8 +103,8 @@ def analizar_estructura_streamlit():
             
             tipos_de_barra = []
             if prop_iguales == "Sí, todas iguales":
-                E = st.number_input("Módulo de Elasticidad (E)", value=2.1e9, format="%.2e")
-                A = st.number_input("Área (A)", value=0.01, format="%.4f")
+                E = st.number_input("Módulo de Elasticidad (E)", value=2100000, format="%d")
+                A = st.number_input("Área (A)", value=10, format="%.4f")
                 I = st.number_input("Inercia (I)", value=0.0001, format="%.5f", disabled=not es_portico) if es_portico else 0
                 tipos_de_barra.append({"E": E, "A": A, "I": I})
                 num_tipos = 1
@@ -113,7 +113,7 @@ def analizar_estructura_streamlit():
                 num_tipos = st.number_input("¿Cuántos tipos de barra diferentes usará?", min_value=1, value=1, step=1)
                 for i in range(num_tipos):
                     with st.expander(f"Definir Tipo de Barra {i+1}", expanded=True):
-                        E = st.number_input(f"Módulo de Elasticidad (E) - Tipo {i+1}", value=2.1e9, format="%.2e", key=f"E_{i}")
+                        E = st.number_input(f"Módulo de Elasticidad (E) - Tipo {i+1}", value=2100000, format="%d", key=f"E_{i}")
                         A = st.number_input(f"Área (A) - Tipo {i+1}", value=0.01, format="%.4f", key=f"A_{i}")
                         I = st.number_input(f"Inercia (I) - Tipo {i+1}", value=0.0001, format="%.5f", key=f"I_{i}", disabled=not es_portico) if es_portico else 0
                         tipos_de_barra.append({"E": E, "A": A, "I": I})

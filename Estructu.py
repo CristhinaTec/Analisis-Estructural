@@ -17,11 +17,12 @@ def obtener_matriz_rigidez_armadura(E, A, L, c, s):
     cs = c * s
     
     # Esta es la matriz correcta resultante de la transformación
+
     return k * np.array([
-        [  c2,   cs, -c2,  -cs ],
-        [  cs,   s2, -cs,  -s2 ],
-        [ -c2,  -cs,  c2,   cs ],
-        [ -cs,  -s2,  cs,   s2 ]
+        [  c2, -cs, -c2,  cs ],
+        [ -cs,  s2,  cs, -s2 ],
+        [ -c2,  cs,  c2, -cs ],
+        [  cs, -s2, -cs,  s2 ]
     ])
 
 # El resto de tus funciones están perfectas.

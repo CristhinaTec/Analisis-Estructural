@@ -79,9 +79,9 @@ def analizar_estructura_streamlit():
         default_barras = [
             {"nodos_str": "1 2", "L": 640, "theta_grados": -38.66},
             {"nodos_str": "2 3", "L": 721.1, "theta_grados": 33.7},
-            {"nodos_str": "1 4", "L": 400, "theta_grados": 0.0},
+            {"nodos_str": "1 4", "L": 500, "theta_grados": 0.0},
             {"nodos_str": "4 3", "L": 600, "theta_grados": 0.0},
-            {"nodos_str": "2 4", "L": 500, "theta_grados": 90}
+            {"nodos_str": "2 4", "L": 400, "theta_grados": 90}
         ]
         default_apoyos = [
             {"nodo": 1, "tipo_str": "Articulado (Pin)"},

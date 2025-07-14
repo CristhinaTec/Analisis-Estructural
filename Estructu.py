@@ -77,9 +77,11 @@ def analizar_estructura_streamlit():
         st.header("📥 Datos de Entrada")
         # --- Valores por defecto para una estructura estable de ejemplo ---
         default_barras = [
-            {"nodos_str": "1 2", "L": 400, "theta_grados": 0.0},
-            {"nodos_str": "2 3", "L": 600, "theta_grados": 0.0},
-            {"nodos_str": "1 3", "L": 500, "theta_grados": 90}
+            {"nodos_str": "1 2", "L": 640, "theta_grados": -38.66},
+            {"nodos_str": "2 3", "L": 721.1, "theta_grados": 33.7},
+            {"nodos_str": "1 4", "L": 400, "theta_grados": 0.0},
+            {"nodos_str": "4 3", "L": 600, "theta_grados": 0.0},
+            {"nodos_str": "2 4", "L": 500, "theta_grados": 90}
         ]
         default_apoyos = [
             {"nodo": 1, "tipo_str": "Articulado (Pin)"},
@@ -119,7 +121,7 @@ def analizar_estructura_streamlit():
                         tipos_de_barra.append({"E": E, "A": A, "I": I})
 
             st.subheader("3. Geometría General")
-            numero_nodos = st.number_input("Número total de nodos", min_value=2, value=3, step=1)
+            numero_nodos = st.number_input("Número total de nodos", min_value=2, value=4, step=1)
             numero_barras = st.number_input("Número total de barras", min_value=1, value=len(default_barras), step=1)
 
             st.subheader("4. Definición de Barras")

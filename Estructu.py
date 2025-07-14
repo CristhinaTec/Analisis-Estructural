@@ -3,22 +3,28 @@ import math
 
 # ==============================================================================
 # MÓDULO DE CÁLCULO DE MATRICES DE RIGIDEZ
-# (Estas funciones no cambian)
 # ==============================================================================
 
 def obtener_matriz_rigidez_armadura(E, A, L, c, s):
     """
     Calcula la matriz de rigidez global 4x4 para un elemento de armadura.
-    NOTA: Se utiliza la formulación específica que coincide con tu Excel.
+    ✅ CORREGIDO: Los signos de los términos 'cs' han sido ajustados
+    para coincidir con la formulación teórica T.T @ K_local @ T.
     """
     k = (A * E) / L
-    c2 = c * c; s2 = s * s; cs = c * s
+    c2 = c * c
+    s2 = s * s
+    cs = c * s
+    
+    # Esta es la matriz correcta resultante de la transformación
     return k * np.array([
-        [  c2, -cs, -c2,  cs ],
-        [ -cs,  s2,  cs, -s2 ],
-        [ -c2,  cs,  c2, -cs ],
-        [  cs, -s2, -cs,  s2 ]
+        [  c2,   cs, -c2,  -cs ],
+        [  cs,   s2, -cs,  -s2 ],
+        [ -c2,  -cs,  c2,   cs ],
+        [ -cs,  -s2,  cs,   s2 ]
     ])
+
+# El resto de tus funciones están perfectas.
 
 def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
     """Calcula la matriz de rigidez global 6x6 para un elemento de pórtico."""

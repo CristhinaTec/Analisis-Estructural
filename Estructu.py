@@ -114,7 +114,7 @@ def analizar_estructura_streamlit():
                 for i in range(num_tipos):
                     with st.expander(f"Definir Tipo de Barra {i+1}", expanded=True):
                         E = st.number_input(f"Módulo de Elasticidad (E) - Tipo {i+1}", value=2100000, format="%d", key=f"E_{i}")
-                        A = st.number_input(f"Área (A) - Tipo {i+1}", value=0.01, format="%.4f", key=f"A_{i}")
+                        A = st.number_input(f"Área (A) - Tipo {i+1}", value=10.00, format="%.4f", key=f"A_{i}")
                         I = st.number_input(f"Inercia (I) - Tipo {i+1}", value=0.0001, format="%.5f", key=f"I_{i}", disabled=not es_portico) if es_portico else 0
                         tipos_de_barra.append({"E": E, "A": A, "I": I})
 

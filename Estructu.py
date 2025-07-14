@@ -48,7 +48,7 @@ def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
         [ 0,  0,  0,  c,  s,  0 ], [ 0,  0,  0, -s,  c,  0 ], [ 0,  0,  0,  0,  0,  1 ]
     ])
     
-    K_global_barra = T.T @ K_local @ T
+    K_global_barra = T @ K_local @ T.T
     return K_global_barra, K_local, T
 
 # ==============================================================================

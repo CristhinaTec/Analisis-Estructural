@@ -1,0 +1,19 @@
+# Entornos virtuales
+venv/
+.venv/
+
+# Archivos de bytecode
+*.pyc
+__pycache__/
+
+# Archivos específicos de VS Code (opcional, pero recomendado)
+.vscode/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Otros patrones comunes a ignorar
+*.log
+*.swp
+*.tmp

@@ -20,13 +20,10 @@ def obtener_matriz_rigidez_armadura(E, A, L, c, s):
     # Esta es la matriz correcta resultante de la transformación
 
     return k * np.array([
-        [  c2, -cs, -c2,  cs ],
-        [ -cs,  s2,  cs, -s2 ],
-        [ -c2,  cs,  c2, -cs ],
-        [  cs, -s2, -cs,  s2 ]
-    ])
-
-# El resto de tus funciones están perfectas.
+        [c2, cs, -c2, -cs], 
+        [cs, s2, -cs, -s2], 
+        [-c2, -cs, c2, cs], 
+        [-cs, -s2, cs, s2]])
 
 def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
     """Calcula la matriz de rigidez global 6x6 para un elemento de pórtico."""
@@ -363,15 +360,4 @@ def analizar_estructura_streamlit():
                 st.error(f"❌ **ERROR: Ocurrió un problema durante el cálculo.** Verifique que todos los datos de entrada sean correctos. Detalle: {e}")
 
 if __name__ == "__main__":
-    # Estas funciones deben estar definidas en tu archivo para que se ejecute
-    def obtener_matriz_rigidez_armadura(E, A, L, c, s):
-        k = (A * E) / L
-        c2 = c * c; s2 = s * s; cs = c * s
-        return k * np.array([[c2, cs, -c2, -cs], [cs, s2, -cs, -s2], [-c2, -cs, c2, cs], [-cs, -s2, cs, s2]])
-    def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
-        EA_L = E * A / L; EIL_12 = 12 * E * I / (L**3); EIL_6 = 6 * E * I / (L**2); EIL_4 = 4 * E * I / L; EIL_2 = 2 * E * I / L
-        K_local = np.array([[EA_L,0,0,-EA_L,0,0], [0,EIL_12,EIL_6,0,-EIL_12,EIL_6], [0,EIL_6,EIL_4,0,-EIL_6,EIL_2], [-EA_L,0,0,EA_L,0,0], [0,-EIL_12,-EIL_6,0,EIL_12,-EIL_6], [0,EIL_6,EIL_2,0,-EIL_6,EIL_4]])
-        T = np.array([[c,s,0,0,0,0], [-s,c,0,0,0,0], [0,0,1,0,0,0], [0,0,0,c,s,0], [0,0,0,-s,c,0], [0,0,0,0,0,1]])
-        return T.T @ K_local @ T, K_local, T
-    
     analizar_estructura_streamlit()

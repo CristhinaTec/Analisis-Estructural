@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import plotly.graph_objects as go
 
 # ==============================================================================
 # MÓDULO DE CÁLCULO DE MATRICES DE RIGIDEZ
@@ -51,6 +52,58 @@ def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
     
     K_global_barra = T.T @ K_local @ T
     return K_global_barra, K_local, T
+
+def graficar_armadura_plotly(coordenadas, elementos, desplazamientos=None, escala=100):
+    """
+    Dibuja la armadura original y deformada (si se proveen desplazamientos)
+    usando Plotly.
+    
+    coordenadas: ndarray (n_nodos, 2)
+    elementos: list de pares de nodos [[i, j], ...]
+    desplazamientos: ndarray (2*n_nodos,) o None
+    escala: factor de amplificación visual para la deformada
+    """
+    fig = go.Figure()
+
+    # --- Graficar la estructura original ---
+    for idx, (ni, nj) in enumerate(elementos):
+        xi, yi = coordenadas[ni]
+        xj, yj = coordenadas[nj]
+        fig.add_trace(go.Scatter(
+            x=[xi, xj], y=[yi, yj],
+            mode='lines+text',
+            line=dict(color='black', width=3),
+            name=f'Barra {idx+1}',
+            text=[f'{ni+1}', f'{nj+1}'],
+            textposition="top center",
+            hoverinfo='text'
+        ))
+
+    # --- Graficar la deformada ---
+    if desplazamientos is not None:
+        n = coordenadas.shape[0]
+        coords_deformadas = coordenadas + escala * desplazamientos.reshape((n, 2))
+
+        for ni, nj in elementos:
+            xi, yi = coords_deformadas[ni]
+            xj, yj = coords_deformadas[nj]
+            fig.add_trace(go.Scatter(
+                x=[xi, xj], y=[yi, yj],
+                mode='lines',
+                line=dict(color='red', width=2, dash='dash'),
+                name='Deformada'
+            ))
+
+    fig.update_layout(
+        title="Estructura: Original (negro) y Deformada (rojo)",
+        xaxis_title="X",
+        yaxis_title="Y",
+        showlegend=False,
+        autosize=True,
+        height=600
+    )
+
+    return fig
 
 # ==============================================================================
 # MÓDULO PRINCIPAL DE ANÁLISIS
@@ -262,6 +315,28 @@ def analizar_estructura_streamlit():
                         dx, dy = desplazamientos[2*i:2*i+2]
                         desp_data.append({"Nodo": i+1, "dX": dx, "dY": dy})
                 st.dataframe(pd.DataFrame(desp_data).style.format("{:.8f}"))
+
+                st.subheader("Gráfica de la Estructura")
+                coordenadas = np.zeros((numero_nodos, 2))
+                # Estimamos coordenadas en base a barras si no fueron definidas (mejor si las defines directamente)
+                for i, elem in enumerate(definicion_elementos):
+                    n1, n2 = elem["nodos"]
+                    L = elem["L"]
+                    theta_rad = math.radians(elem["theta_grados"])
+                    if coordenadas[n1][0] == 0 and coordenadas[n1][1] == 0:
+                        coordenadas[n2][0] = coordenadas[n1][0] + L * math.cos(theta_rad)
+                        coordenadas[n2][1] = coordenadas[n1][1] + L * math.sin(theta_rad)
+
+                # Preparar conectividad
+                conectividad = [elem["nodos"] for elem in definicion_elementos]
+
+                # Reducción de desplazamientos a 2D (solo dX y dY por nodo)
+                disp_reducido = desplazamientos.reshape((numero_nodos, gdl_por_nodo))[:, :2].flatten()
+
+                # Llamar a la función de graficado
+                fig = graficar_armadura_plotly(coordenadas, conectividad, disp_reducido, escala=100)
+                st.plotly_chart(fig, use_container_width=True)
+
 
                 st.subheader("Fuerzas Internas en los Elementos")
                 for i, elem in enumerate(definicion_elementos):

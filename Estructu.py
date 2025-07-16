@@ -119,7 +119,7 @@ def analizar_estructura_streamlit():
 
     st.write("Buen día Ingeniero Carlos Bravo, Cristhina Vargas le presenta:")
     st.title("🏗️ Análisis Matricial de Estructuras 2D")
-    st.write("Herramienta para calcular la matriz de rigidez, desplazamientos y fuerzas internas en armaduras y pórticos planos.")
+    st.write("Mi Herramienta para calcular la matriz de rigidez, desplazamientos y fuerzas internas en armaduras y pórticos planos.")
 
     # --- Contenedores para la interfaz ---
     col1, col2 = st.columns([1, 2])

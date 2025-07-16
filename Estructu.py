@@ -20,10 +20,10 @@ def obtener_matriz_rigidez_armadura(E, A, L, c, s):
     # Esta es la matriz correcta resultante de la transformación
 
     return k * np.array([
-        [c2, cs, -c2, -cs], 
-        [cs, s2, -cs, -s2], 
-        [-c2, -cs, c2, cs], 
-        [-cs, -s2, cs, s2]])
+        [c2, -cs, -c2, cs], 
+        [-cs, s2, cs, -s2], 
+        [-c2, cs, c2, -cs], 
+        [cs, -s2, -cs, s2]])
 
 def obtener_matriz_rigidez_portico(E, A, I, L, c, s):
     """Calcula la matriz de rigidez global 6x6 para un elemento de pórtico."""

@@ -125,7 +125,9 @@ def analizar_estructura_streamlit():
     col1, col2 = st.columns([1, 2])
 
     with col1:
+
         st.header("📥 Datos de Entrada")
+        
         # --- Valores por defecto para una estructura estable de ejemplo ---
         default_barras = [
             {"nodos_str": "1 2", "L": 640, "theta_grados": -38.66},
@@ -156,8 +158,8 @@ def analizar_estructura_streamlit():
             
             tipos_de_barra = []
             if prop_iguales == "Sí, todas iguales":
-                E = st.number_input("Módulo de Elasticidad (E)", value=2100000, format="%.4f")
-                A = st.number_input("Área (A)", value=10, format="%.4f")
+                E = st.number_input("Módulo de Elasticidad (E)", value=2100000, format="%d")
+                A = st.number_input("Área (A)", value=10, format="%.2f")
                 I = st.number_input("Inercia (I)", value=0.0001, format="%.5f", disabled=not es_portico) if es_portico else 0
                 tipos_de_barra.append({"E": E, "A": A, "I": I})
                 num_tipos = 1
